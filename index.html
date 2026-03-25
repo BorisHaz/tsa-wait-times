@@ -136,6 +136,30 @@
       cursor: default;
     }
 
+    .card.featured {
+      padding: 1.35rem 1.4rem;
+      border-color: #388bfd44;
+      grid-column: span 1;
+    }
+
+    .card.featured .airport-code {
+      font-size: 1.5rem;
+    }
+
+    .card.featured .airport-name {
+      font-size: 0.85rem;
+    }
+
+    .card.featured .wait-pill {
+      font-size: 0.85rem;
+      padding: 0.3rem 0.7rem;
+    }
+
+    .card.featured .wait-bar-wrap {
+      height: 6px;
+      margin-top: 0.9rem;
+    }
+
     .card:hover {
       border-color: #484f58;
     }
@@ -383,8 +407,9 @@ function render(filter = "") {
       const wClass = waitClass(wait);
       const bClass = barClass(wait);
 
+      const FEATURED = ["JFK", "EWR", "PHL"];
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = "card" + (FEATURED.includes(airport.code) ? " featured" : "");
       card.innerHTML = `
         <div class="card-header">
           <div>
