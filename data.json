@@ -1,5 +1,247 @@
 {
-  "updated_at": null,
-  "airports": [],
-  "wait_times": {}
+  "updated_at": "2026-03-25T13:03:35.587019+00:00",
+  "airports": [
+    {
+      "code": "JFK",
+      "name": "John F. Kennedy, New York",
+      "region": "Northeast"
+    },
+    {
+      "code": "LGA",
+      "name": "LaGuardia, New York",
+      "region": "Northeast"
+    },
+    {
+      "code": "EWR",
+      "name": "Newark Liberty, NJ",
+      "region": "Northeast"
+    },
+    {
+      "code": "BOS",
+      "name": "Boston Logan",
+      "region": "Northeast"
+    },
+    {
+      "code": "PHL",
+      "name": "Philadelphia Intl",
+      "region": "Northeast"
+    },
+    {
+      "code": "DCA",
+      "name": "Washington Reagan",
+      "region": "Northeast"
+    },
+    {
+      "code": "IAD",
+      "name": "Washington Dulles",
+      "region": "Northeast"
+    },
+    {
+      "code": "BWI",
+      "name": "Baltimore/Washington",
+      "region": "Northeast"
+    },
+    {
+      "code": "ATL",
+      "name": "Hartsfield-Jackson, Atlanta",
+      "region": "Southeast"
+    },
+    {
+      "code": "MCO",
+      "name": "Orlando Intl",
+      "region": "Southeast"
+    },
+    {
+      "code": "MIA",
+      "name": "Miami Intl",
+      "region": "Southeast"
+    },
+    {
+      "code": "FLL",
+      "name": "Fort Lauderdale",
+      "region": "Southeast"
+    },
+    {
+      "code": "TPA",
+      "name": "Tampa Intl",
+      "region": "Southeast"
+    },
+    {
+      "code": "CLT",
+      "name": "Charlotte Douglas",
+      "region": "Southeast"
+    },
+    {
+      "code": "RDU",
+      "name": "Raleigh-Durham",
+      "region": "Southeast"
+    },
+    {
+      "code": "MSY",
+      "name": "New Orleans",
+      "region": "Southeast"
+    },
+    {
+      "code": "ORD",
+      "name": "Chicago O'Hare",
+      "region": "Midwest"
+    },
+    {
+      "code": "MDW",
+      "name": "Chicago Midway",
+      "region": "Midwest"
+    },
+    {
+      "code": "DTW",
+      "name": "Detroit Metro",
+      "region": "Midwest"
+    },
+    {
+      "code": "MSP",
+      "name": "Minneapolis-St. Paul",
+      "region": "Midwest"
+    },
+    {
+      "code": "STL",
+      "name": "St. Louis Lambert",
+      "region": "Midwest"
+    },
+    {
+      "code": "CMH",
+      "name": "Columbus Intl",
+      "region": "Midwest"
+    },
+    {
+      "code": "CLE",
+      "name": "Cleveland Hopkins",
+      "region": "Midwest"
+    },
+    {
+      "code": "IND",
+      "name": "Indianapolis Intl",
+      "region": "Midwest"
+    },
+    {
+      "code": "DFW",
+      "name": "Dallas/Fort Worth",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "DAL",
+      "name": "Dallas Love Field",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "IAH",
+      "name": "Houston Bush",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "HOU",
+      "name": "Houston Hobby",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "PHX",
+      "name": "Phoenix Sky Harbor",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "LAS",
+      "name": "Las Vegas Harry Reid",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "DEN",
+      "name": "Denver Intl",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "SAT",
+      "name": "San Antonio Intl",
+      "region": "South & Southwest"
+    },
+    {
+      "code": "LAX",
+      "name": "Los Angeles Intl",
+      "region": "West Coast"
+    },
+    {
+      "code": "SFO",
+      "name": "San Francisco Intl",
+      "region": "West Coast"
+    },
+    {
+      "code": "SJC",
+      "name": "San Jose Mineta",
+      "region": "West Coast"
+    },
+    {
+      "code": "OAK",
+      "name": "Oakland Intl",
+      "region": "West Coast"
+    },
+    {
+      "code": "SEA",
+      "name": "Seattle-Tacoma",
+      "region": "West Coast"
+    },
+    {
+      "code": "PDX",
+      "name": "Portland Intl",
+      "region": "West Coast"
+    },
+    {
+      "code": "SAN",
+      "name": "San Diego Intl",
+      "region": "West Coast"
+    },
+    {
+      "code": "SNA",
+      "name": "Orange County",
+      "region": "West Coast"
+    }
+  ],
+  "wait_times": {
+    "JFK": null,
+    "LGA": null,
+    "EWR": null,
+    "BOS": null,
+    "PHL": null,
+    "DCA": null,
+    "IAD": null,
+    "BWI": null,
+    "ATL": null,
+    "MCO": null,
+    "MIA": null,
+    "FLL": null,
+    "TPA": null,
+    "CLT": null,
+    "RDU": null,
+    "MSY": null,
+    "ORD": null,
+    "MDW": null,
+    "DTW": null,
+    "MSP": null,
+    "STL": null,
+    "CMH": null,
+    "CLE": null,
+    "IND": null,
+    "DFW": null,
+    "DAL": null,
+    "IAH": null,
+    "HOU": null,
+    "PHX": null,
+    "LAS": null,
+    "DEN": null,
+    "SAT": null,
+    "LAX": null,
+    "SFO": null,
+    "SJC": null,
+    "OAK": null,
+    "SEA": null,
+    "PDX": null,
+    "SAN": null,
+    "SNA": null
+  }
 }
