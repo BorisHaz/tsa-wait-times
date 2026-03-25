@@ -1,0 +1,44 @@
+name: Watchdog — Keep Data Fresh
+
+on:
+  schedule:
+    # Runs at :17 and :47 — every 30 minutes, offset from main cron at :02 and :32
+    - cron: '17,47 * * * *'
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Check data age and trigger update if stale
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          UPDATED=$(curl -sf "https://raw.githubusercontent.com/BorisHaz/tsa-wait-times/main/data.json?t=$(date +%s)" \
+            | python3 -c "import json,sys; print(json.load(sys.stdin).get('updated_at',''))" 2>/dev/null || echo "")
+
+          if [ -z "$UPDATED" ]; then
+            echo "Could not read data.json — triggering update"
+            gh workflow run update-data.yml --repo BorisHaz/tsa-wait-times
+            exit 0
+          fi
+
+          AGE=$(python3 -c "
+from datetime import datetime, timezone
+ts = '$UPDATED'
+try:
+    dt = datetime.fromisoformat(ts.replace('Z','+00:00'))
+    print(int((datetime.now(timezone.utc) - dt).total_seconds()))
+except:
+    print(9999)
+")
+          echo "Data age: ${AGE}s ($(( AGE / 60 ))m)"
+
+          # Trigger update if data is older than 35 minutes
+          if [ "$AGE" -gt 2100 ]; then
+            echo "STALE — triggering update workflow"
+            gh workflow run update-data.yml --repo BorisHaz/tsa-wait-times
+          else
+            echo "Fresh — no action needed"
+          fi
