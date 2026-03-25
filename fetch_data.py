@@ -1,8 +1,36 @@
 import os
 import json
 import random
-import math
+import requests
 from datetime import datetime, timezone
+
+# Cherry Hill, NJ → nearby airports (lat/lon)
+CHERRY_HILL = (39.9346, -75.0307)
+NEARBY_AIRPORTS = {
+    "PHL": (39.8721, -75.2411),
+    "EWR": (40.6895, -74.1745),
+    "JFK": (40.6413, -73.7781),
+}
+
+
+def fetch_drive_times():
+    times = {}
+    for code, (lat, lon) in NEARBY_AIRPORTS.items():
+        try:
+            url = (f"https://router.project-osrm.org/route/v1/driving/"
+                   f"{CHERRY_HILL[1]},{CHERRY_HILL[0]};{lon},{lat}?overview=false")
+            res = requests.get(url, timeout=10)
+            if res.status_code == 200:
+                data = res.json()
+                secs = data["routes"][0]["duration"]
+                times[code] = round(secs / 60)
+            else:
+                times[code] = None
+        except Exception as e:
+            print(f"Drive time error {code}: {e}")
+            times[code] = None
+    print(f"Drive times: {times}")
+    return times
 
 AIRPORTS = [
     {"code": "JFK", "name": "John F. Kennedy, New York",   "region": "Northeast"},
@@ -108,11 +136,13 @@ def fetch_wait_times():
 def main():
     print("Fetching TSA wait times...")
     wait_times = fetch_wait_times()
+    drive_times = fetch_drive_times()
 
     output = {
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "airports": AIRPORTS,
         "wait_times": wait_times,
+        "drive_times": drive_times,
     }
 
     with open("data.json", "w") as f:
