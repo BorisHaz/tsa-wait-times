@@ -139,11 +139,10 @@ def fetch_faa_delays():
 
         # Convert to multipliers
         for code in ground_stopped:
-            multipliers[code] = 2.0   # ground stop = very backed up
+            multipliers[code] = 2.0
 
         for code, mins in delay_mins.items():
             if code not in multipliers:
-                # 60-min delay → ~1.6x, 120-min → ~2.0x, capped at 2.2x
                 multipliers[code] = min(1.0 + (mins / 100), 2.2)
 
         print(f"FAA delays: ground_stops={ground_stopped}, delay_airports={list(delay_mins.keys())}")
@@ -151,6 +150,39 @@ def fetch_faa_delays():
         print(f"FAA fetch error: {e}")
 
     return multipliers
+
+
+def fetch_faa_alerts():
+    """Returns dict: code → short human-readable delay string for display."""
+    alerts = {}
+    try:
+        res = requests.get(
+            "https://nasstatus.faa.gov/api/airport-status-information",
+            timeout=15
+        )
+        if res.status_code != 200:
+            return alerts
+        text = res.text.strip()
+        if not text or text[0] not in ('{', '['):
+            return alerts
+        data = json.loads(text)
+        for block in data.get("airport_status_information", {}).get("delay_types", []):
+            for gs in block.get("ground_stop_list") or []:
+                code = gs.get("arpt", "").upper()
+                if code:
+                    alerts[code] = f"Ground Stop · {gs.get('reason','')}"[:50]
+            for gd in block.get("ground_delay_list") or []:
+                code = gd.get("arpt", "").upper()
+                if code and code not in alerts:
+                    alerts[code] = f"Ground Delay ~{gd.get('avg','?')} · {gd.get('reason','')}"[:50]
+            for ad in block.get("arrival_departure_delay_list") or []:
+                code = ad.get("arpt", "").upper()
+                if code and code not in alerts:
+                    adv = ad.get("arrival_departure", {})
+                    alerts[code] = f"{adv.get('type','Delay')} Delay {adv.get('min','?')}–{adv.get('max','?')}"[:50]
+    except Exception as e:
+        print(f"FAA alerts error: {e}")
+    return alerts
 
 
 # ── TSA national throughput ───────────────────────────────────────────────────
@@ -267,12 +299,14 @@ def main():
     print("Fetching TSA wait times...")
     wait_times  = fetch_wait_times()
     drive_times = fetch_drive_times()
+    faa_alerts  = fetch_faa_alerts()
 
     output = {
         "updated_at":  datetime.now(timezone.utc).isoformat(),
         "airports":    AIRPORTS,
         "wait_times":  wait_times,
         "drive_times": drive_times,
+        "faa_alerts":  faa_alerts,
     }
 
     with open("data.json", "w") as f:

@@ -14,6 +14,7 @@
       --yellow:      #ffe600;
       --red:         #ff2244;
       --orange:      #ff8800;
+      --purple:      #bb88ff;
       --text:        #f0f6ff;
       --muted:       #98b0e0;
       --dim:         #6a84c0;
@@ -31,7 +32,6 @@
       overflow-x: hidden;
     }
 
-    /* Grid overlay — very faint */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -43,116 +43,120 @@
       z-index: 0;
     }
 
-    /* Scanlines — off */
-    body::after { display: none; }
-
-    header, .search-bar, .legend, .region, #error-container, #app {
+    header, .controls, .legend, .holiday-banner, .region, #error-container, #app {
       position: relative; z-index: 1;
     }
 
     /* ── HEADER ── */
-    header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
+    header { text-align: center; margin-bottom: 2rem; }
 
     .header-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: var(--dim);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      font-size: 0.62rem; letter-spacing: 0.3em;
+      color: var(--dim); text-transform: uppercase; margin-bottom: 0.5rem;
     }
 
     header h1 {
-      font-size: clamp(1.6rem, 4vw, 2.8rem);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--cyan);
-      text-shadow:
-        0 0 8px var(--cyan),
-        0 0 25px var(--cyan),
-        0 0 60px rgba(0,245,255,0.3);
+      text-shadow: 0 0 8px var(--cyan), 0 0 25px var(--cyan), 0 0 55px rgba(0,245,255,0.25);
       margin-bottom: 0.4rem;
     }
 
     header p {
-      color: var(--dim);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      color: var(--dim); font-size: 0.72rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
     }
 
     .meta {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.2rem;
-      margin-top: 0.9rem;
-      flex-wrap: wrap;
+      display: flex; justify-content: center; align-items: center;
+      gap: 1.2rem; margin-top: 0.9rem; flex-wrap: wrap;
     }
 
     .live-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(0,245,255,0.06);
-      border: 1px solid rgba(0,245,255,0.4);
-      color: var(--cyan);
-      padding: 0.28rem 0.9rem;
-      border-radius: 2px;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      box-shadow: 0 0 12px rgba(0,245,255,0.15), inset 0 0 8px rgba(0,245,255,0.04);
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(0,245,255,0.06); border: 1px solid rgba(0,245,255,0.4);
+      color: var(--cyan); padding: 0.28rem 0.9rem; border-radius: 2px;
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      box-shadow: 0 0 12px rgba(0,245,255,0.12);
     }
 
     .dot {
-      width: 6px; height: 6px;
-      background: var(--cyan);
-      border-radius: 50%;
-      box-shadow: 0 0 6px var(--cyan);
+      width: 6px; height: 6px; background: var(--cyan);
+      border-radius: 50%; box-shadow: 0 0 6px var(--cyan);
       animation: blink 2s infinite;
     }
-
     @keyframes blink {
-      0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--cyan); }
-      50%       { opacity: 0.25; box-shadow: none; }
+      0%,100% { opacity:1; box-shadow: 0 0 6px var(--cyan); }
+      50%      { opacity:0.25; box-shadow: none; }
     }
 
     .last-updated { color: var(--dim); font-size: 0.7rem; letter-spacing: 0.06em; }
 
-    /* ── SEARCH ── */
-    .search-bar { display: flex; justify-content: center; margin-bottom: 2rem; }
+    /* ── HOLIDAY BANNER ── */
+    .holiday-banner {
+      max-width: 900px; margin: 0 auto 1.5rem;
+      background: rgba(255,230,0,0.07); border: 1px solid rgba(255,230,0,0.35);
+      border-radius: 2px; padding: 0.65rem 1rem;
+      color: var(--yellow); font-size: 0.78rem; letter-spacing: 0.06em;
+      text-align: center; display: none;
+      box-shadow: 0 0 18px rgba(255,230,0,0.08);
+    }
+
+    /* ── CONTROLS (search + precheck) ── */
+    .controls {
+      display: flex; justify-content: center; align-items: center;
+      gap: 1rem; margin-bottom: 1.8rem; flex-wrap: wrap;
+    }
 
     .search-bar input {
-      background: rgba(0,245,255,0.03);
-      border: 1px solid rgba(0,245,255,0.2);
-      border-radius: 2px;
-      color: var(--cyan);
-      padding: 0.6rem 1rem;
-      font-size: 0.8rem;
-      font-family: inherit;
-      width: 100%; max-width: 420px;
-      outline: none;
-      letter-spacing: 0.1em;
+      background: rgba(0,245,255,0.03); border: 1px solid rgba(0,245,255,0.2);
+      border-radius: 2px; color: var(--cyan); padding: 0.6rem 1rem;
+      font-size: 0.8rem; font-family: inherit; width: 280px;
+      outline: none; letter-spacing: 0.1em;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .search-bar input::placeholder { color: var(--muted); }
+    .search-bar input::placeholder { color: var(--dim); }
     .search-bar input:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 16px rgba(0,245,255,0.2);
+      border-color: var(--cyan); box-shadow: 0 0 14px rgba(0,245,255,0.18);
     }
+
+    /* PreCheck toggle */
+    .precheck-wrap {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); cursor: pointer; user-select: none;
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 0.55rem 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .precheck-wrap:hover { border-color: var(--purple); color: var(--purple); }
+    .precheck-wrap.active {
+      border-color: var(--purple); color: var(--purple);
+      background: rgba(187,136,255,0.07);
+      box-shadow: 0 0 14px rgba(187,136,255,0.12);
+    }
+
+    .toggle-track {
+      width: 32px; height: 16px; background: var(--border);
+      border-radius: 8px; position: relative; transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .precheck-wrap.active .toggle-track { background: var(--purple); }
+
+    .toggle-thumb {
+      width: 12px; height: 12px; background: var(--dim);
+      border-radius: 50%; position: absolute; top: 2px; left: 2px;
+      transition: left 0.2s, background 0.2s;
+    }
+    .precheck-wrap.active .toggle-thumb { left: 18px; background: #fff; }
 
     /* ── LEGEND ── */
     .legend {
-      display: flex; justify-content: center;
-      gap: 1.4rem; flex-wrap: wrap;
-      margin-bottom: 2rem;
-      font-size: 0.68rem;
-      color: var(--dim);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      display: flex; justify-content: center; gap: 1.4rem;
+      flex-wrap: wrap; margin-bottom: 2rem;
+      font-size: 0.68rem; color: var(--dim);
+      letter-spacing: 0.1em; text-transform: uppercase;
     }
     .legend span { display: flex; align-items: center; gap: 0.4rem; }
     .legend-dot  { width: 8px; height: 8px; border-radius: 50%; }
@@ -161,12 +165,8 @@
     .region { max-width: 1100px; margin: 0 auto 2.5rem; }
 
     .region-title {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(0,245,255,0.55);
-      margin-bottom: 0.8rem;
-      padding-left: 0.3rem;
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(0,245,255,0.5); margin-bottom: 0.8rem; padding-left: 0.3rem;
     }
 
     .grid {
@@ -175,162 +175,139 @@
       gap: 0.7rem;
     }
 
-    /* ── CARD BASE ── */
+    /* ── CARD ── */
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 0.9rem 1rem;
-      cursor: default;
-      position: relative;
-      overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 2px; padding: 0.9rem 1rem;
+      cursor: default; position: relative; overflow: hidden;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-
-    /* left accent bar */
     .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 2px; height: 100%;
-      background: var(--border);
+      content: ''; position: absolute; top:0; left:0;
+      width: 2px; height: 100%; background: var(--border);
       transition: background 0.2s, box-shadow 0.2s;
     }
+    .card:hover { border-color: rgba(0,245,255,0.25); }
+    .card:hover::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
 
-    .card:hover { border-color: rgba(0,245,255,0.2); }
-    .card:hover::before {
-      background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan);
-    }
-
-    /* ── FEATURED CARD (JFK · EWR · PHL) ── */
+    /* Featured (JFK · EWR · PHL) */
     .card.featured {
-      padding: 1.1rem 1.15rem;
+      padding: 1.05rem 1.1rem;
       border-color: rgba(255,136,0,0.35);
-      background: rgba(255,136,0,0.03);
+      background: rgba(255,136,0,0.025);
     }
-
-    .card.featured::before {
-      background: var(--orange);
-      box-shadow: 0 0 10px var(--orange);
-    }
-
-    /* top-right corner bracket */
+    .card.featured::before { background: var(--orange); box-shadow: 0 0 10px var(--orange); }
     .card.featured::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0;
-      width: 14px; height: 14px;
-      border-top: 2px solid var(--orange);
-      border-right: 2px solid var(--orange);
+      content: ''; position: absolute; top:0; right:0;
+      width: 13px; height: 13px;
+      border-top: 2px solid var(--orange); border-right: 2px solid var(--orange);
     }
-
-    .card.featured:hover {
-      border-color: rgba(255,136,0,0.7);
-      box-shadow: 0 0 20px rgba(255,136,0,0.12);
-    }
+    .card.featured:hover { border-color: rgba(255,136,0,0.65); box-shadow: 0 0 18px rgba(255,136,0,0.1); }
 
     .nearby-tag {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      color: var(--orange);
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      opacity: 0.85;
+      font-size: 0.55rem; letter-spacing: 0.2em; color: var(--orange);
+      text-transform: uppercase; margin-bottom: 0.3rem; opacity: 0.85;
     }
 
-    /* ── CARD CONTENT ── */
     .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.55rem;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 0.5rem;
     }
 
     .airport-code {
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: var(--text);
+      font-size: 1.2rem; font-weight: 700;
+      letter-spacing: 0.06em; color: var(--text);
     }
-
     .card.featured .airport-code {
-      font-size: 1.45rem;
-      color: var(--orange);
-      text-shadow: 0 0 12px rgba(255,136,0,0.45);
+      font-size: 1.4rem; color: var(--orange);
+      text-shadow: 0 0 12px rgba(255,136,0,0.4);
     }
 
     .airport-name {
-      color: var(--muted);
-      font-size: 0.7rem;
-      margin-top: 0.15rem;
+      color: var(--muted); font-size: 0.7rem;
+      margin-top: 0.12rem; letter-spacing: 0.02em;
+    }
+
+    /* Wait pill */
+    .wait-pill {
+      font-size: 0.72rem; font-weight: 700;
+      padding: 0.2rem 0.55rem; border-radius: 2px;
+      white-space: nowrap; letter-spacing: 0.04em;
+    }
+    .wait-low    { color:var(--green);  border:1px solid rgba(0,255,136,0.35);  background:rgba(0,255,136,0.08);  box-shadow:0 0 8px rgba(0,255,136,0.1); }
+    .wait-medium { color:var(--yellow); border:1px solid rgba(255,230,0,0.35);  background:rgba(255,230,0,0.08);  box-shadow:0 0 8px rgba(255,230,0,0.1); }
+    .wait-high   { color:var(--red);    border:1px solid rgba(255,34,68,0.35);  background:rgba(255,34,68,0.08);  box-shadow:0 0 8px rgba(255,34,68,0.1); }
+    .wait-na     { color:var(--muted);  border:1px solid rgba(38,48,96,0.6);    background:rgba(38,48,96,0.15); }
+    .wait-precheck { color:var(--purple); border:1px solid rgba(187,136,255,0.4); background:rgba(187,136,255,0.08); box-shadow:0 0 8px rgba(187,136,255,0.1); }
+
+    /* Progress bar */
+    .wait-bar-wrap {
+      height: 2px; background: rgba(255,255,255,0.04);
+      overflow: hidden; margin-top: 0.6rem;
+    }
+    .card.featured .wait-bar-wrap { height: 3px; }
+    .wait-bar { height: 100%; transition: width 0.5s ease; }
+    .bar-low      { background:var(--green);  box-shadow:0 0 5px var(--green); }
+    .bar-medium   { background:var(--yellow); box-shadow:0 0 5px var(--yellow); }
+    .bar-high     { background:var(--red);    box-shadow:0 0 5px var(--red); }
+    .bar-na       { background:var(--muted); }
+    .bar-precheck { background:var(--purple); box-shadow:0 0 5px var(--purple); }
+
+    /* Drive time */
+    .drive-time {
+      margin-top: 0.5rem; font-size: 0.67rem;
+      color: var(--orange); letter-spacing: 0.04em;
+      display: flex; align-items: center; gap: 0.3rem; opacity: 0.9;
+    }
+
+    /* FAA delay badge */
+    .faa-badge {
+      display: inline-block; margin-top: 0.45rem;
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--red); border: 1px solid rgba(255,34,68,0.35);
+      background: rgba(255,34,68,0.07); padding: 0.15rem 0.45rem;
+      border-radius: 2px; box-shadow: 0 0 6px rgba(255,34,68,0.1);
+    }
+
+    /* ── BEST TIME HEATMAP ── */
+    .heatmap { margin-top: 0.75rem; }
+
+    .heatmap-label {
+      font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--dim); margin-bottom: 0.35rem;
+    }
+
+    .heatmap-slots {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px;
+    }
+
+    .heatmap-slot {
+      border-radius: 2px; height: 18px; position: relative;
+      cursor: default; transition: opacity 0.2s;
+    }
+    .heatmap-slot.now {
+      outline: 1px solid rgba(255,255,255,0.6);
+      outline-offset: 1px;
+    }
+    .heatmap-slot-label {
+      position: absolute; bottom: -14px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.52rem; color: var(--dim); white-space: nowrap;
       letter-spacing: 0.02em;
     }
 
-    /* ── WAIT PILL ── */
-    .wait-pill {
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 0.2rem 0.55rem;
-      border-radius: 2px;
-      white-space: nowrap;
-      letter-spacing: 0.04em;
-    }
-
-    .wait-low    { color: var(--green);  border: 1px solid rgba(0,255,136,0.35); background: rgba(0,255,136,0.08);  box-shadow: 0 0 8px rgba(0,255,136,0.1); }
-    .wait-medium { color: var(--yellow); border: 1px solid rgba(255,230,0,0.35); background: rgba(255,230,0,0.08);  box-shadow: 0 0 8px rgba(255,230,0,0.1); }
-    .wait-high   { color: var(--red);    border: 1px solid rgba(255,34,68,0.35); background: rgba(255,34,68,0.08);  box-shadow: 0 0 8px rgba(255,34,68,0.1); }
-    .wait-na     { color: var(--muted);  border: 1px solid rgba(46,58,94,0.5);   background: rgba(46,58,94,0.15); }
-
-    /* ── PROGRESS BAR ── */
-    .wait-bar-wrap {
-      height: 2px;
-      background: rgba(255,255,255,0.04);
-      overflow: hidden;
-      margin-top: 0.65rem;
-    }
-    .card.featured .wait-bar-wrap { height: 3px; margin-top: 0.8rem; }
-
-    .wait-bar { height: 100%; transition: width 0.5s ease; }
-
-    .bar-low    { background: var(--green);  box-shadow: 0 0 6px var(--green); }
-    .bar-medium { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
-    .bar-high   { background: var(--red);    box-shadow: 0 0 6px var(--red); }
-    .bar-na     { background: var(--muted); }
-
-    /* ── DRIVE TIME ── */
-    .drive-time {
-      margin-top: 0.55rem;
-      font-size: 0.67rem;
-      color: var(--orange);
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      opacity: 0.9;
-    }
+    .heatmap-wrap { padding-bottom: 18px; }
 
     /* ── MISC ── */
     .loading {
-      text-align: center;
-      color: var(--dim);
-      padding: 3rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+      text-align: center; color: var(--dim); padding: 3rem;
+      font-size: 0.85rem; letter-spacing: 0.25em; text-transform: uppercase;
     }
-
     .error-banner {
-      text-align: center;
-      color: var(--red);
-      background: rgba(255,34,68,0.05);
-      border: 1px solid rgba(255,34,68,0.3);
-      border-radius: 2px;
-      padding: 1rem;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
+      text-align: center; color: var(--red);
+      background: rgba(255,34,68,0.05); border: 1px solid rgba(255,34,68,0.3);
+      border-radius: 2px; padding: 1rem; max-width: 600px;
+      margin: 0 auto 2rem; font-size: 0.85rem; letter-spacing: 0.05em;
     }
   </style>
 </head>
@@ -339,21 +316,30 @@
 <header>
   <div class="header-label">&#9632; System Online &#9632;</div>
   <h1>// TSA WAIT TIMES</h1>
-  <p>Estimates calibrated with FAA delay data &amp; live TSA throughput</p>
+  <p>Calibrated with FAA delay data &amp; live TSA throughput</p>
   <div class="meta">
-    <div class="live-badge"><div class="dot"></div>&nbsp;Estimated</div>
+    <div class="live-badge"><div class="dot"></div>&nbsp;Live Estimates</div>
     <div class="last-updated" id="last-updated">Loading...</div>
   </div>
 </header>
 
-<div class="search-bar">
-  <input type="text" id="search" placeholder="[ SEARCH: JFK, LOS ANGELES... ]" oninput="filterAirports()" />
+<div class="holiday-banner" id="holiday-banner"></div>
+
+<div class="controls">
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="[ SEARCH: JFK, MIAMI... ]" oninput="filterAirports()" />
+  </div>
+  <div class="precheck-wrap" id="precheck-toggle" onclick="togglePrecheck()">
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    TSA PreCheck
+  </div>
 </div>
 
 <div class="legend">
   <span><div class="legend-dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></div>&lt; 15 min</span>
   <span><div class="legend-dot" style="background:var(--yellow);box-shadow:0 0 5px var(--yellow)"></div>15–30 min</span>
   <span><div class="legend-dot" style="background:var(--red);box-shadow:0 0 5px var(--red)"></div>30+ min</span>
+  <span><div class="legend-dot" style="background:var(--purple);box-shadow:0 0 5px var(--purple)"></div>PreCheck</span>
   <span><div class="legend-dot" style="background:var(--orange);box-shadow:0 0 5px var(--orange)"></div>Nearby · Cherry Hill NJ</span>
 </div>
 
@@ -363,118 +349,198 @@
 <script>
 const AIRPORTS = {
   "Northeast": [
-    { code: "JFK", name: "John F. Kennedy, New York" },
-    { code: "LGA", name: "LaGuardia, New York" },
-    { code: "EWR", name: "Newark Liberty, NJ" },
-    { code: "BOS", name: "Boston Logan" },
-    { code: "PHL", name: "Philadelphia Intl" },
-    { code: "DCA", name: "Washington Reagan" },
-    { code: "IAD", name: "Washington Dulles" },
-    { code: "BWI", name: "Baltimore/Washington" },
+    { code:"JFK", name:"John F. Kennedy, New York" },
+    { code:"LGA", name:"LaGuardia, New York" },
+    { code:"EWR", name:"Newark Liberty, NJ" },
+    { code:"BOS", name:"Boston Logan" },
+    { code:"PHL", name:"Philadelphia Intl" },
+    { code:"DCA", name:"Washington Reagan" },
+    { code:"IAD", name:"Washington Dulles" },
+    { code:"BWI", name:"Baltimore/Washington" },
   ],
   "Southeast": [
-    { code: "ATL", name: "Hartsfield-Jackson, Atlanta" },
-    { code: "MCO", name: "Orlando Intl" },
-    { code: "MIA", name: "Miami Intl" },
-    { code: "FLL", name: "Fort Lauderdale" },
-    { code: "TPA", name: "Tampa Intl" },
-    { code: "CLT", name: "Charlotte Douglas" },
-    { code: "RDU", name: "Raleigh-Durham" },
-    { code: "MSY", name: "New Orleans" },
+    { code:"ATL", name:"Hartsfield-Jackson, Atlanta" },
+    { code:"MCO", name:"Orlando Intl" },
+    { code:"MIA", name:"Miami Intl" },
+    { code:"FLL", name:"Fort Lauderdale" },
+    { code:"TPA", name:"Tampa Intl" },
+    { code:"CLT", name:"Charlotte Douglas" },
+    { code:"RDU", name:"Raleigh-Durham" },
+    { code:"MSY", name:"New Orleans" },
   ],
   "Midwest": [
-    { code: "ORD", name: "Chicago O'Hare" },
-    { code: "MDW", name: "Chicago Midway" },
-    { code: "DTW", name: "Detroit Metro" },
-    { code: "MSP", name: "Minneapolis-St. Paul" },
-    { code: "STL", name: "St. Louis Lambert" },
-    { code: "CMH", name: "Columbus Intl" },
-    { code: "CLE", name: "Cleveland Hopkins" },
-    { code: "IND", name: "Indianapolis Intl" },
+    { code:"ORD", name:"Chicago O'Hare" },
+    { code:"MDW", name:"Chicago Midway" },
+    { code:"DTW", name:"Detroit Metro" },
+    { code:"MSP", name:"Minneapolis-St. Paul" },
+    { code:"STL", name:"St. Louis Lambert" },
+    { code:"CMH", name:"Columbus Intl" },
+    { code:"CLE", name:"Cleveland Hopkins" },
+    { code:"IND", name:"Indianapolis Intl" },
   ],
   "South & Southwest": [
-    { code: "DFW", name: "Dallas/Fort Worth" },
-    { code: "DAL", name: "Dallas Love Field" },
-    { code: "IAH", name: "Houston Bush" },
-    { code: "HOU", name: "Houston Hobby" },
-    { code: "PHX", name: "Phoenix Sky Harbor" },
-    { code: "LAS", name: "Las Vegas Harry Reid" },
-    { code: "DEN", name: "Denver Intl" },
-    { code: "SAT", name: "San Antonio Intl" },
+    { code:"DFW", name:"Dallas/Fort Worth" },
+    { code:"DAL", name:"Dallas Love Field" },
+    { code:"IAH", name:"Houston Bush" },
+    { code:"HOU", name:"Houston Hobby" },
+    { code:"PHX", name:"Phoenix Sky Harbor" },
+    { code:"LAS", name:"Las Vegas Harry Reid" },
+    { code:"DEN", name:"Denver Intl" },
+    { code:"SAT", name:"San Antonio Intl" },
   ],
   "West Coast": [
-    { code: "LAX", name: "Los Angeles Intl" },
-    { code: "SFO", name: "San Francisco Intl" },
-    { code: "SJC", name: "San Jose Mineta" },
-    { code: "OAK", name: "Oakland Intl" },
-    { code: "SEA", name: "Seattle-Tacoma" },
-    { code: "PDX", name: "Portland Intl" },
-    { code: "SAN", name: "San Diego Intl" },
-    { code: "SNA", name: "Orange County" },
+    { code:"LAX", name:"Los Angeles Intl" },
+    { code:"SFO", name:"San Francisco Intl" },
+    { code:"SJC", name:"San Jose Mineta" },
+    { code:"OAK", name:"Oakland Intl" },
+    { code:"SEA", name:"Seattle-Tacoma" },
+    { code:"PDX", name:"Portland Intl" },
+    { code:"SAN", name:"San Diego Intl" },
+    { code:"SNA", name:"Orange County" },
   ],
 };
 
 const FEATURED = ["JFK", "EWR", "PHL"];
-let allData = {};
-let driveTimes = {};
+const PRECHECK_MULT = 0.22; // PreCheck ~4-5x faster
 
-function waitClass(m) {
+// Heatmap: 6 blocks × 4 hours each (ET = UTC-4)
+const HEATMAP_SLOTS = [
+  { label:"12–4a", hoursET:[0,1,2,3],   baseMult:0.35 },
+  { label:"4–8a",  hoursET:[4,5,6,7],   baseMult:1.45 },
+  { label:"8a–12", hoursET:[8,9,10,11], baseMult:1.15 },
+  { label:"12–4p", hoursET:[12,13,14,15], baseMult:0.8 },
+  { label:"4–8p",  hoursET:[16,17,18,19], baseMult:1.3 },
+  { label:"8p–12", hoursET:[20,21,22,23], baseMult:0.7 },
+];
+
+// Known busy travel periods (month 0-indexed)
+const BUSY_PERIODS = [
+  { name:"Thanksgiving Week",    start:[10,24], end:[10,30] },
+  { name:"Christmas / New Year", start:[11,21], end:[0,2]   },
+  { name:"Spring Break",         start:[2,15],  end:[3,15]  },
+  { name:"4th of July Weekend",  start:[6,2],   end:[6,7]   },
+  { name:"Labor Day Weekend",    start:[8,29],  end:[8,31]  },
+  { name:"Memorial Day Weekend", start:[4,24],  end:[4,27]  },
+];
+
+let allData      = {};
+let driveTimes   = {};
+let faaAlerts    = {};   // code → delay description
+let precheckOn   = false;
+
+// ── helpers ──────────────────────────────────────────────────────────────────
+
+function waitClass(m, precheck) {
+  if (precheck) return "wait-precheck";
   if (m === null) return "wait-na";
   if (m < 15)    return "wait-low";
   if (m < 30)    return "wait-medium";
   return "wait-high";
 }
-function barClass(m) {
+function barClass(m, precheck) {
+  if (precheck)  return "bar-precheck";
   if (m === null) return "bar-na";
   if (m < 15)    return "bar-low";
   if (m < 30)    return "bar-medium";
   return "bar-high";
 }
 function barWidth(m) {
-  if (m === null) return "15%";
+  if (m === null) return "12%";
   return Math.min((m / 60) * 100, 100) + "%";
 }
-function waitLabel(m) {
+function waitLabel(m, precheck) {
   if (m === null) return "N/A";
-  if (m === 0)   return "< 1 min";
-  return `~${m} min`;
+  const val = precheck ? Math.max(1, Math.round(m * PRECHECK_MULT)) : m;
+  if (val === 0) return "< 1 min";
+  return `~${val} min`;
 }
 function driveLabel(mins) {
   if (!mins) return null;
   if (mins < 60) return `${mins} min drive`;
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
+  const h = Math.floor(mins / 60), m = mins % 60;
   return m ? `${h}h ${m}m drive` : `${h}h drive`;
 }
+
+function slotColor(mult) {
+  if (mult < 0.6)  return "rgba(0,255,136,0.55)";
+  if (mult < 1.0)  return "rgba(0,255,136,0.3)";
+  if (mult < 1.2)  return "rgba(255,230,0,0.45)";
+  if (mult < 1.4)  return "rgba(255,136,0,0.55)";
+  return "rgba(255,34,68,0.6)";
+}
+
+function currentETHour() {
+  // ET offset (approximate — UTC-4 summer, UTC-5 winter)
+  const now = new Date();
+  const jan = new Date(now.getFullYear(), 0, 1);
+  const jul = new Date(now.getFullYear(), 6, 1);
+  const stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+  const isDST     = now.getTimezoneOffset() < stdOffset;
+  return (now.getUTCHours() - (isDST ? 4 : 5) + 24) % 24;
+}
+
+function checkHoliday() {
+  const now = new Date();
+  const m = now.getMonth(), d = now.getDate();
+  for (const p of BUSY_PERIODS) {
+    const [sm, sd] = p.start, [em, ed] = p.end;
+    const after  = m > sm || (m === sm && d >= sd);
+    const before = m < em || (m === em && d <= ed);
+    // handle year-wrap (Nov→Jan)
+    const wrap   = sm > em;
+    if (wrap ? (after || before) : (after && before)) return p.name;
+  }
+  return null;
+}
+
+// ── PreCheck ─────────────────────────────────────────────────────────────────
+
+function togglePrecheck() {
+  precheckOn = !precheckOn;
+  const el = document.getElementById("precheck-toggle");
+  el.classList.toggle("active", precheckOn);
+  render(document.getElementById("search").value.trim().toLowerCase());
+}
+
+// ── Load ─────────────────────────────────────────────────────────────────────
 
 async function loadAll() {
   try {
     const res = await fetch("data.json?t=" + Date.now());
-    if (!res.ok) throw new Error("fetch failed");
+    if (!res.ok) throw new Error();
     const json = await res.json();
 
-    if (json.wait_times) Object.assign(allData, json.wait_times);
+    if (json.wait_times)  Object.assign(allData,    json.wait_times);
     if (json.drive_times) Object.assign(driveTimes, json.drive_times);
+    if (json.faa_alerts)  Object.assign(faaAlerts,  json.faa_alerts);
 
-    if (json.updated_at) {
-      const d = new Date(json.updated_at);
-      document.getElementById("last-updated").textContent =
-        "Updated: " + d.toLocaleString();
-    } else {
-      document.getElementById("last-updated").textContent = "Pending first update";
-    }
+    document.getElementById("last-updated").textContent = json.updated_at
+      ? "Updated: " + new Date(json.updated_at).toLocaleString()
+      : "Pending first update";
   } catch {
     document.getElementById("last-updated").textContent = "Data unavailable";
     document.getElementById("error-container").innerHTML =
       `<div class="error-banner">[ ERROR ] Could not load data.json</div>`;
   }
+
+  // Holiday banner
+  const period = checkHoliday();
+  const banner = document.getElementById("holiday-banner");
+  if (period) {
+    banner.textContent = `⚠ ${period.toUpperCase()} — Expect significantly longer wait times nationwide`;
+    banner.style.display = "block";
+  }
+
   render();
 }
+
+// ── Render ───────────────────────────────────────────────────────────────────
 
 function render(filter = "") {
   const app = document.getElementById("app");
   app.innerHTML = "";
   let anyVisible = false;
+  const etHour = currentETHour();
 
   for (const [region, airports] of Object.entries(AIRPORTS)) {
     const filtered = airports.filter(a =>
@@ -482,7 +548,7 @@ function render(filter = "") {
       a.code.toLowerCase().includes(filter) ||
       a.name.toLowerCase().includes(filter)
     );
-    if (filtered.length === 0) continue;
+    if (!filtered.length) continue;
     anyVisible = true;
 
     const section = document.createElement("div");
@@ -491,27 +557,52 @@ function render(filter = "") {
     const grid = section.querySelector(".grid");
 
     filtered.forEach(airport => {
-      const wait   = allData[airport.code] ?? null;
-      const wClass = waitClass(wait);
-      const bClass = barClass(wait);
-      const isFeat = FEATURED.includes(airport.code);
-      const drive  = isFeat ? driveLabel(driveTimes[airport.code]) : null;
+      const rawWait = allData[airport.code] ?? null;
+      const isFeat  = FEATURED.includes(airport.code);
+      const drive   = isFeat ? driveLabel(driveTimes[airport.code]) : null;
+      const alert   = faaAlerts[airport.code] || null;
+      const wClass  = waitClass(rawWait, precheckOn);
+      const bClass  = barClass(rawWait, precheckOn);
 
       const card = document.createElement("div");
       card.className = "card" + (isFeat ? " featured" : "");
+
+      // Heatmap HTML for featured airports
+      let heatmapHTML = "";
+      if (isFeat && rawWait !== null) {
+        const baseWait = rawWait;
+        const slots = HEATMAP_SLOTS.map((s, i) => {
+          const slotWait = Math.round(baseWait * s.baseMult);
+          const isNow    = s.hoursET.includes(etHour);
+          const color    = slotColor(s.baseMult);
+          return `<div class="heatmap-slot${isNow ? " now" : ""}"
+                       style="background:${color}"
+                       title="${s.label}: ~${slotWait} min">
+                    <span class="heatmap-slot-label">${s.label}</span>
+                  </div>`;
+        }).join("");
+        heatmapHTML = `
+          <div class="heatmap heatmap-wrap">
+            <div class="heatmap-label">Best time to go (ET)</div>
+            <div class="heatmap-slots">${slots}</div>
+          </div>`;
+      }
+
       card.innerHTML = `
-        ${isFeat ? `<div class="nearby-tag">&#9670; Nearby</div>` : ""}
+        ${isFeat ? `<div class="nearby-tag">&#9670; Nearby · Cherry Hill NJ</div>` : ""}
         <div class="card-header">
           <div>
             <div class="airport-code">${airport.code}</div>
             <div class="airport-name">${airport.name}</div>
           </div>
-          <div class="wait-pill ${wClass}">${waitLabel(wait)}</div>
+          <div class="wait-pill ${wClass}">${waitLabel(rawWait, precheckOn)}</div>
         </div>
         <div class="wait-bar-wrap">
-          <div class="wait-bar ${bClass}" style="width:${barWidth(wait)}"></div>
+          <div class="wait-bar ${bClass}" style="width:${barWidth(rawWait)}"></div>
         </div>
-        ${drive ? `<div class="drive-time">&#9654; ${drive} (no traffic)</div>` : ""}
+        ${drive  ? `<div class="drive-time">&#9654; ${drive} (no traffic)</div>` : ""}
+        ${alert  ? `<div class="faa-badge">&#9888; FAA: ${alert}</div>` : ""}
+        ${heatmapHTML}
       `;
       grid.appendChild(card);
     });
@@ -519,14 +610,12 @@ function render(filter = "") {
     app.appendChild(section);
   }
 
-  if (!anyVisible) {
+  if (!anyVisible)
     app.innerHTML = `<div class="loading">[ No results for "${filter}" ]</div>`;
-  }
 }
 
 function filterAirports() {
-  const q = document.getElementById("search").value.trim().toLowerCase();
-  render(q);
+  render(document.getElementById("search").value.trim().toLowerCase());
 }
 
 loadAll();
