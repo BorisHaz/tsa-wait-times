@@ -25,7 +25,7 @@ jobs:
 
       - name: Fetch TSA wait times
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.rapidapi }}
         run: python fetch_data.py
 
       - name: Commit and push data.json
