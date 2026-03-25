@@ -66,6 +66,8 @@ def fetch_wait_times():
         try:
             url = f"https://tsa-wait-times.p.rapidapi.com/waittimes/{code}"
             res = requests.get(url, headers=headers, timeout=10)
+            if code in ("JFK", "LAX"):  # debug first run only for 2 airports
+                print(f"DEBUG {code}: status={res.status_code} body={res.text[:300]}")
             if res.status_code == 200:
                 data = res.json()
                 # Handle both possible response shapes
