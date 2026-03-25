@@ -7,16 +7,16 @@
   <style>
     :root {
       --bg:          #03040f;
-      --card:        #060813;
-      --border:      #111830;
+      --card:        #090d1e;
+      --border:      #1c2440;
       --cyan:        #00f5ff;
       --green:       #00ff88;
       --yellow:      #ffe600;
       --red:         #ff2244;
       --orange:      #ff8800;
-      --text:        #b8ccee;
-      --muted:       #2e3a5e;
-      --dim:         #4a5880;
+      --text:        #dde8ff;
+      --muted:       #7a90c0;
+      --dim:         #5068a0;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,14 +36,14 @@
       content: '';
       position: fixed; inset: 0;
       background-image:
-        linear-gradient(rgba(0,245,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,245,255,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(0,245,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.015) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Scanlines */
+    /* Scanlines — very subtle */
     body::after {
       content: '';
       position: fixed; inset: 0;
@@ -51,8 +51,8 @@
         0deg,
         transparent,
         transparent 3px,
-        rgba(0,0,0,0.18) 3px,
-        rgba(0,0,0,0.18) 4px
+        rgba(0,0,0,0.06) 3px,
+        rgba(0,0,0,0.06) 4px
       );
       pointer-events: none;
       z-index: 0;
@@ -173,10 +173,10 @@
     .region { max-width: 1100px; margin: 0 auto 2.5rem; }
 
     .region-title {
-      font-size: 0.62rem;
-      letter-spacing: 0.25em;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(0,245,255,0.35);
+      color: rgba(0,245,255,0.55);
       margin-bottom: 0.8rem;
       padding-left: 0.3rem;
     }
@@ -274,19 +274,19 @@
 
     .airport-name {
       color: var(--muted);
-      font-size: 0.65rem;
-      margin-top: 0.1rem;
+      font-size: 0.7rem;
+      margin-top: 0.15rem;
       letter-spacing: 0.02em;
     }
 
     /* ── WAIT PILL ── */
     .wait-pill {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 0.18rem 0.5rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 2px;
       white-space: nowrap;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
     }
 
     .wait-low    { color: var(--green);  border: 1px solid rgba(0,255,136,0.35); background: rgba(0,255,136,0.08);  box-shadow: 0 0 8px rgba(0,255,136,0.1); }
