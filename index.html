@@ -6,17 +6,17 @@
   <title>TSA WAIT TIMES</title>
   <style>
     :root {
-      --bg:          #03040f;
-      --card:        #090d1e;
-      --border:      #1c2440;
+      --bg:          #070b18;
+      --card:        #0e1428;
+      --border:      #263060;
       --cyan:        #00f5ff;
       --green:       #00ff88;
       --yellow:      #ffe600;
       --red:         #ff2244;
       --orange:      #ff8800;
-      --text:        #dde8ff;
-      --muted:       #7a90c0;
-      --dim:         #5068a0;
+      --text:        #f0f6ff;
+      --muted:       #98b0e0;
+      --dim:         #6a84c0;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,32 +31,20 @@
       overflow-x: hidden;
     }
 
-    /* Grid overlay */
+    /* Grid overlay — very faint */
     body::before {
       content: '';
       position: fixed; inset: 0;
       background-image:
-        linear-gradient(rgba(0,245,255,0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,245,255,0.015) 1px, transparent 1px);
+        linear-gradient(rgba(0,245,255,0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.012) 1px, transparent 1px);
       background-size: 48px 48px;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Scanlines — very subtle */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(0,0,0,0.06) 3px,
-        rgba(0,0,0,0.06) 4px
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
+    /* Scanlines — off */
+    body::after { display: none; }
 
     header, .search-bar, .legend, .region, #error-container, #app {
       position: relative; z-index: 1;
