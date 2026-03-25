@@ -330,39 +330,31 @@ function waitLabel(minutes) {
   return `~${minutes} min`;
 }
 
-async function fetchWaitTime(code) {
-  const PROXY = "https://corsproxy.io/?url=";
-  const TSA_URL = `http://apps.tsa.dhs.gov/MyTSAWebService/GetTSOWaitTimes.ashx?ap=${code}&output=json`;
-  try {
-    const res = await fetch(PROXY + encodeURIComponent(TSA_URL));
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data || !data.WaitTimes || data.WaitTimes.length === 0) return null;
-    // Take the most recent entry
-    const latest = data.WaitTimes[0];
-    const wait = parseInt(latest.WaitTime, 10);
-    return isNaN(wait) ? null : wait * 10; // TSA returns 10-min increments
-  } catch {
-    return null;
-  }
-}
-
 async function loadAll() {
-  const allCodes = Object.values(AIRPORTS).flat().map(a => a.code);
-  const results = await Promise.allSettled(
-    allCodes.map(async code => {
-      const wait = await fetchWaitTime(code);
-      return { code, wait };
-    })
-  );
-  results.forEach(r => {
-    if (r.status === "fulfilled") {
-      allData[r.value.code] = r.value.wait;
-    }
-  });
+  try {
+    const res = await fetch("data.json?t=" + Date.now());
+    if (!res.ok) throw new Error("Failed to load data.json");
+    const json = await res.json();
 
-  document.getElementById("last-updated").textContent =
-    "Last updated: " + new Date().toLocaleTimeString();
+    // Populate allData from the fetched JSON
+    if (json.wait_times) {
+      Object.assign(allData, json.wait_times);
+    }
+
+    // Show last updated time from the JSON file
+    if (json.updated_at) {
+      const d = new Date(json.updated_at);
+      document.getElementById("last-updated").textContent =
+        "Last updated: " + d.toLocaleString();
+    } else {
+      document.getElementById("last-updated").textContent = "Data pending first update";
+    }
+  } catch (e) {
+    document.getElementById("last-updated").textContent = "Could not load data";
+    document.getElementById("error-container").innerHTML =
+      `<div class="error-banner">Could not load wait time data. It will be available after the first automated update.</div>`;
+  }
+
   render();
 }
 
