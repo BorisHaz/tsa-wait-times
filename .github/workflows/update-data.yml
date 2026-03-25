@@ -2,8 +2,10 @@ name: Update TSA Wait Times
 
 on:
   schedule:
-    - cron: '*/30 * * * *'   # every 30 minutes
+    - cron: '2,32 * * * *'   # every 30 min at :02 and :32 (explicit times are more reliable than */30)
   workflow_dispatch:           # allow manual runs
+  push:
+    branches: [main]           # also run on push to keep data fresh
 
 jobs:
   update:
