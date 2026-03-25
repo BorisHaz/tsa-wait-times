@@ -105,7 +105,11 @@ def fetch_faa_delays():
             print(f"FAA API status {res.status_code}")
             return multipliers
 
-        data = res.json()
+        text = res.text.strip()
+        if not text or text[0] not in ('{', '['):
+            print("FAA returned no delay data (clear skies)")
+            return multipliers
+        data = json.loads(text)
         delay_types = data.get("airport_status_information", {}).get("delay_types", [])
 
         ground_stopped = set()
