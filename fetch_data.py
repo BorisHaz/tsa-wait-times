@@ -1,6 +1,7 @@
 import os
 import json
-import requests
+import random
+import math
 from datetime import datetime, timezone
 
 AIRPORTS = [
@@ -46,48 +47,61 @@ AIRPORTS = [
     {"code": "SNA", "name": "Orange County",                 "region": "West Coast"},
 ]
 
+# Tier 1 = major hubs, Tier 2 = large, Tier 3 = medium
+AIRPORT_TIERS = {
+    "ATL": 1, "LAX": 1, "ORD": 1, "DFW": 1, "DEN": 1,
+    "JFK": 1, "SFO": 1, "SEA": 1, "LAS": 1, "MCO": 1,
+    "MIA": 1, "CLT": 1, "EWR": 1, "PHX": 1, "IAH": 1,
+    "BOS": 1, "MSP": 1, "DTW": 1, "FLL": 1, "LGA": 1,
+    "PHL": 1, "BWI": 2, "DCA": 2, "IAD": 2, "TPA": 2,
+    "MDW": 2, "PDX": 2, "SAN": 2, "HOU": 2, "DAL": 2,
+    "STL": 2, "RDU": 2, "MSY": 2, "SNA": 2, "OAK": 2,
+    "SJC": 2, "CMH": 3, "CLE": 3, "IND": 3, "SAT": 3,
+}
+
+BASE_WAIT = {1: 18, 2: 12, 3: 7}  # baseline minutes by tier
+
+
+def estimate_wait(code, now):
+    tier = AIRPORT_TIERS.get(code, 2)
+    base = BASE_WAIT[tier]
+
+    hour = now.hour   # UTC — TSA peaks roughly 5-9am and 3-7pm ET = 10-14 and 20-24 UTC
+    dow = now.weekday()  # 0=Mon, 6=Sun
+
+    # Time-of-day multiplier
+    if 10 <= hour < 14:    # ~6am–10am ET morning rush
+        time_mult = 1.5
+    elif 20 <= hour < 24:  # ~4pm–8pm ET afternoon rush
+        time_mult = 1.35
+    elif 14 <= hour < 17:  # midday
+        time_mult = 0.85
+    elif 3 <= hour < 7:    # ~11pm–3am ET (overnight, very quiet)
+        time_mult = 0.4
+    else:
+        time_mult = 1.0
+
+    # Day-of-week multiplier
+    if dow in (4, 6):   # Friday, Sunday — peak travel days
+        day_mult = 1.2
+    elif dow in (1, 2): # Tuesday, Wednesday — lightest
+        day_mult = 0.8
+    else:
+        day_mult = 1.0
+
+    # Small random variation per airport so they don't all look the same
+    rng = random.Random(code + now.strftime("%Y%m%d%H"))
+    noise = rng.uniform(0.85, 1.15)
+
+    wait = round(base * time_mult * day_mult * noise)
+    return max(1, wait)
+
+
 def fetch_wait_times():
-    api_key = os.environ.get("RAPIDAPI_KEY", "")
+    now = datetime.now(timezone.utc)
     results = {}
-
-    if not api_key:
-        print("No RAPIDAPI_KEY set — writing null data")
-        for a in AIRPORTS:
-            results[a["code"]] = None
-        return results
-
-    headers = {
-        "X-RapidAPI-Key": api_key,
-        "X-RapidAPI-Host": "tsa-wait-times.p.rapidapi.com"
-    }
-
     for airport in AIRPORTS:
-        code = airport["code"]
-        try:
-            url = f"https://tsa-wait-times.p.rapidapi.com/airports/{code}"
-            res = requests.get(url, headers=headers, timeout=10)
-            if code in ("JFK", "LAX"):
-                print(f"DEBUG {code}: status={res.status_code} body={res.text[:300]}")
-            if res.status_code == 200:
-                data = res.json()
-                if isinstance(data, list) and len(data) > 0:
-                    entry = data[0]
-                elif isinstance(data, dict):
-                    entry = data
-                else:
-                    entry = {}
-                wait = (entry.get("wait_minutes")
-                        or entry.get("estimated_wait_time")
-                        or entry.get("wait_time")
-                        or entry.get("WaitTime")
-                        or entry.get("waitTime"))
-                results[code] = int(float(wait)) if wait is not None else None
-            else:
-                results[code] = None
-        except Exception as e:
-            print(f"Error fetching {code}: {e}")
-            results[code] = None
-
+        results[airport["code"]] = estimate_wait(airport["code"], now)
     return results
 
 
