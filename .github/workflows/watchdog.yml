@@ -1,8 +1,7 @@
-name: Watchdog — Keep Data Fresh
+name: Watchdog - Keep Data Fresh
 
 on:
   schedule:
-    # Runs at :17 and :47 — every 30 minutes, offset from main cron at :02 and :32
     - cron: '17,47 * * * *'
 
 jobs:
@@ -19,7 +18,7 @@ jobs:
             | python3 -c "import json,sys; print(json.load(sys.stdin).get('updated_at',''))" 2>/dev/null || echo "")
 
           if [ -z "$UPDATED" ]; then
-            echo "Could not read data.json — triggering update"
+            echo "Could not read data.json - triggering update"
             gh workflow run update-data.yml --repo BorisHaz/tsa-wait-times
             exit 0
           fi
@@ -35,10 +34,9 @@ except:
 ")
           echo "Data age: ${AGE}s ($(( AGE / 60 ))m)"
 
-          # Trigger update if data is older than 35 minutes
           if [ "$AGE" -gt 2100 ]; then
-            echo "STALE — triggering update workflow"
+            echo "STALE - triggering update"
             gh workflow run update-data.yml --repo BorisHaz/tsa-wait-times
           else
-            echo "Fresh — no action needed"
+            echo "Fresh - no action needed"
           fi
