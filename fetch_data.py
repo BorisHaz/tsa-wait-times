@@ -64,20 +64,24 @@ def fetch_wait_times():
     for airport in AIRPORTS:
         code = airport["code"]
         try:
-            url = f"https://tsa-wait-times.p.rapidapi.com/waittimes/{code}"
+            url = f"https://tsa-wait-times.p.rapidapi.com/airports/{code}"
             res = requests.get(url, headers=headers, timeout=10)
-            if code in ("JFK", "LAX"):  # debug first run only for 2 airports
+            if code in ("JFK", "LAX"):
                 print(f"DEBUG {code}: status={res.status_code} body={res.text[:300]}")
             if res.status_code == 200:
                 data = res.json()
-                # Handle both possible response shapes
                 if isinstance(data, list) and len(data) > 0:
-                    wait = data[0].get("wait_time") or data[0].get("WaitTime") or data[0].get("waitTime")
+                    entry = data[0]
                 elif isinstance(data, dict):
-                    wait = data.get("wait_time") or data.get("WaitTime") or data.get("waitTime")
+                    entry = data
                 else:
-                    wait = None
-                results[code] = int(wait) if wait is not None else None
+                    entry = {}
+                wait = (entry.get("wait_minutes")
+                        or entry.get("estimated_wait_time")
+                        or entry.get("wait_time")
+                        or entry.get("WaitTime")
+                        or entry.get("waitTime"))
+                results[code] = int(float(wait)) if wait is not None else None
             else:
                 results[code] = None
         except Exception as e:
