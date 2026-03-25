@@ -270,33 +270,49 @@
     }
 
     /* ── BEST TIME HEATMAP ── */
-    .heatmap { margin-top: 0.75rem; }
+    .heatmap { margin-top: 0.85rem; }
 
     .heatmap-label {
-      font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--dim); margin-bottom: 0.35rem;
+      font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.5rem;
     }
 
     .heatmap-slots {
-      display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px;
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
     }
 
     .heatmap-slot {
-      border-radius: 2px; height: 18px; position: relative;
-      cursor: default; transition: opacity 0.2s;
+      border-radius: 3px; padding: 0.35rem 0.2rem 0.3rem;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2px;
+      cursor: default; position: relative;
+      border: 1px solid transparent;
+      transition: transform 0.15s;
     }
+    .heatmap-slot:hover { transform: translateY(-1px); }
+
     .heatmap-slot.now {
-      outline: 1px solid rgba(255,255,255,0.6);
-      outline-offset: 1px;
-    }
-    .heatmap-slot-label {
-      position: absolute; bottom: -14px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.52rem; color: var(--dim); white-space: nowrap;
-      letter-spacing: 0.02em;
+      border-color: rgba(255,255,255,0.55);
+      box-shadow: 0 0 8px rgba(255,255,255,0.15);
     }
 
-    .heatmap-wrap { padding-bottom: 18px; }
+    .heatmap-slot-time {
+      font-size: 0.58rem; color: rgba(255,255,255,0.75);
+      letter-spacing: 0.02em; white-space: nowrap; line-height: 1;
+    }
+
+    .heatmap-slot-wait {
+      font-size: 0.65rem; font-weight: 700;
+      color: #fff; line-height: 1;
+    }
+
+    .heatmap-slot.now .heatmap-slot-time { color: #fff; }
+
+    .now-marker {
+      font-size: 0.52rem; letter-spacing: 0.08em; text-align: center;
+      color: rgba(255,255,255,0.5); margin-top: 0.3rem;
+      text-transform: uppercase;
+    }
 
     /* ── MISC ── */
     .loading {
@@ -558,6 +574,7 @@ function render(filter = "") {
 
     filtered.forEach(airport => {
       const rawWait = allData[airport.code] ?? null;
+      const baseWait = rawWait;
       const isFeat  = FEATURED.includes(airport.code);
       const drive   = isFeat ? driveLabel(driveTimes[airport.code]) : null;
       const alert   = faaAlerts[airport.code] || null;
@@ -570,21 +587,22 @@ function render(filter = "") {
       // Heatmap HTML for featured airports
       let heatmapHTML = "";
       if (isFeat && rawWait !== null) {
-        const baseWait = rawWait;
-        const slots = HEATMAP_SLOTS.map((s, i) => {
-          const slotWait = Math.round(baseWait * s.baseMult);
+        let nowLabel = "";
+        const slots = HEATMAP_SLOTS.map((s) => {
+          const slotWait = Math.round(baseWait * s.baseMult * (precheckOn ? PRECHECK_MULT : 1));
           const isNow    = s.hoursET.includes(etHour);
           const color    = slotColor(s.baseMult);
-          return `<div class="heatmap-slot${isNow ? " now" : ""}"
-                       style="background:${color}"
-                       title="${s.label}: ~${slotWait} min">
-                    <span class="heatmap-slot-label">${s.label}</span>
+          if (isNow) nowLabel = `Now: ~${slotWait} min`;
+          return `<div class="heatmap-slot${isNow ? " now" : ""}" style="background:${color}">
+                    <span class="heatmap-slot-time">${s.label}</span>
+                    <span class="heatmap-slot-wait">~${slotWait}m</span>
                   </div>`;
         }).join("");
         heatmapHTML = `
-          <div class="heatmap heatmap-wrap">
-            <div class="heatmap-label">Best time to go (ET)</div>
+          <div class="heatmap">
+            <div class="heatmap-label">&#9660; Best time to go (ET)</div>
             <div class="heatmap-slots">${slots}</div>
+            ${nowLabel ? `<div class="now-marker">&#9654; ${nowLabel}</div>` : ""}
           </div>`;
       }
 
