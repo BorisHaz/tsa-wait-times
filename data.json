@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-22T03:35:32.543146+00:00",
+  "updated_at": "2026-04-22T06:02:12.100532+00:00",
   "airports": [
     {
       "code": "JFK",
@@ -206,8 +206,8 @@
     "JFK": 5,
     "LGA": 6,
     "EWR": 6,
-    "BOS": 6,
-    "PHL": 5,
+    "BOS": 5,
+    "PHL": 6,
     "DCA": 4,
     "IAD": 4,
     "BWI": 4,
@@ -215,11 +215,11 @@
     "MCO": 5,
     "MIA": 6,
     "FLL": 6,
-    "TPA": 4,
+    "TPA": 3,
     "CLT": 5,
     "RDU": 4,
     "MSY": 4,
-    "ORD": 5,
+    "ORD": 6,
     "MDW": 4,
     "DTW": 6,
     "MSP": 6,
@@ -231,23 +231,23 @@
     "DAL": 4,
     "IAH": 6,
     "HOU": 4,
-    "PHX": 6,
+    "PHX": 5,
     "LAS": 5,
-    "DEN": 5,
+    "DEN": 6,
     "SAT": 2,
     "LAX": 6,
     "SFO": 6,
     "SJC": 4,
-    "OAK": 4,
+    "OAK": 3,
     "SEA": 6,
-    "PDX": 4,
+    "PDX": 3,
     "SAN": 4,
     "SNA": 4
   },
   "drive_times": {
-    "PHL": 29,
-    "EWR": 94,
-    "JFK": 134
+    "PHL": null,
+    "EWR": null,
+    "JFK": null
   },
   "faa_alerts": {}
 }
