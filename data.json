@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-19T05:59:09.395928+00:00",
+  "updated_at": "2026-08-19T06:55:49.383071+00:00",
   "airports": [
     {
       "code": "JFK",
@@ -203,14 +203,14 @@
     }
   ],
   "wait_times": {
-    "JFK": 6,
+    "JFK": 5,
     "LGA": 5,
     "EWR": 5,
     "BOS": 6,
     "PHL": 6,
-    "DCA": 3,
+    "DCA": 4,
     "IAD": 4,
-    "BWI": 4,
+    "BWI": 3,
     "ATL": 5,
     "MCO": 6,
     "MIA": 6,
@@ -227,22 +227,22 @@
     "CMH": 2,
     "CLE": 2,
     "IND": 2,
-    "DFW": 6,
-    "DAL": 4,
+    "DFW": 5,
+    "DAL": 3,
     "IAH": 6,
     "HOU": 4,
     "PHX": 6,
-    "LAS": 5,
+    "LAS": 6,
     "DEN": 5,
     "SAT": 2,
     "LAX": 6,
     "SFO": 6,
     "SJC": 4,
-    "OAK": 3,
+    "OAK": 4,
     "SEA": 6,
     "PDX": 4,
     "SAN": 4,
-    "SNA": 4
+    "SNA": 3
   },
   "drive_times": {
     "PHL": 29,
